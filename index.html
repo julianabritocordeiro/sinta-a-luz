@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinta a Luz - Oficial</title>
+
     <style>
         body, html { 
             margin: 0; 
@@ -24,7 +25,7 @@
             background-color: #222;
         }
 
-        /* BLOCO PRINCIPAL NO CANTO */
+        /* BLOCO PRINCIPAL */
         .overlay { 
             position: absolute;
             bottom: 20px;
@@ -35,11 +36,13 @@
             backdrop-filter: blur(8px); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            width: 260px;
+
+            width: 90%;
+            max-width: 300px;
         }
 
         h1 { 
-            font-size: 1.2rem; 
+            font-size: clamp(1rem, 4vw, 1.4rem);
             margin-bottom: 5px; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
@@ -109,8 +112,37 @@
             opacity: 1; 
             border-bottom: 1px solid #f39c12; 
         }
+
+        /* RESPONSIVO */
+        @media (max-width: 600px) {
+            .overlay {
+                bottom: 10px;
+                left: 10px;
+                padding: 15px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+
+            p {
+                font-size: 0.75rem;
+            }
+
+            nav a {
+                font-size: 0.65rem;
+                margin: 0 5px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="background">
         
