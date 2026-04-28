@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinta a Luz - Oficial</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; color: white; overflow: hidden; }
+        .background { 
+            background-image: url('background.png'); 
+            background-size: cover; 
+            background-position: center; 
+            height: 100vh; width: 100vw; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+        }
+        .overlay { 
+            background: rgba(0, 0, 0, 0.6); 
+            padding: 40px; border-radius: 15px; text-align: center; 
+            backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 3px; }
+        .player-container { width: 300px; margin-top: 20px; }
+        .controls { margin-bottom: 15px; }
+        button { background: #f39c12; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; color: white; transition: 0.3s; }
+        button:hover { background: #e67e22; transform: scale(1.05); }
+        input[type=range] { width: 100%; cursor: pointer; accent-color: #f39c12; }
+        .time { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px; font-family: monospace; }
+        nav { margin-top: 30px; }
+        nav a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.9rem; opacity: 0.7; transition: 0.3s; }
+        nav a:hover { opacity: 1; border-bottom: 2px solid #f39c12; }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="overlay">
+            <h1>SINTA A LUZ</h1>
+            <p>Cada dia é uma nova oportunidade</p>
+            <div class="player-container">
+                <audio id="audio-player" src="musica.mp3"></audio>
+                <div class="controls"><button id="play-btn">PLAY</button></div>
+                <input type="range" id="seek-slider" value="0">
+                <div class="time"><span id="current-time">0:00</span><span id="duration">0:00</span></div>
+            </div>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="letra.html">Letra</a>
+                <a href="sobre.html">Sobre</a>
+            </nav>
+        </div>
+    </div>
+    <script>
+        const audio = document.getElementById('audio-player');
+        const playBtn = document.getElementById('play-btn');
+        const seekSlider = document.getElementById('seek-slider');
+        const currentTimeContainer = document.getElementById('current-time');
+        const durationContainer = document.getElementById('duration');
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) { audio.play(); playBtn.textContent = 'PAUSE'; }
+            else { audio.pause(); playBtn.textContent = 'PLAY'; }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0;
+            currentTimeContainer.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.onloadedmetadata = () => { durationContainer.textContent = formatTime(audio.duration); };
+
+        seekSlider.addEventListener('input', () => {
+            audio.currentTime = (seekSlider.value / 100) * audio.duration;
+        });
+
+        function formatTime(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = Math.floor(seconds % 60);
+            return min + ':' + (sec < 10 ? '0' + sec : sec);
+        }
+    </script>
+</body>
+</html>
